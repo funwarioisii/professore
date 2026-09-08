@@ -1,0 +1,56 @@
+{
+  "date": "2026-09-08T14:14:46.120Z",
+  "sampleRate": 48000,
+  "decodedSamples": 6384640,
+  "results": [
+    {
+      "beatId": "why",
+      "samples": 648116,
+      "startSample": 12000,
+      "correlation": 0.9999874994484018
+    },
+    {
+      "beatId": "who",
+      "samples": 673304,
+      "startSample": 700916,
+      "correlation": 0.9999881041354404
+    },
+    {
+      "beatId": "request",
+      "samples": 758250,
+      "startSample": 1415020,
+      "correlation": 0.9999876105845903
+    },
+    {
+      "beatId": "callback",
+      "samples": 718677,
+      "startSample": 2214070,
+      "correlation": 0.9999882055187079
+    },
+    {
+      "beatId": "exchangeBeat",
+      "samples": 760381,
+      "startSample": 2973547,
+      "correlation": 0.9999888583173314
+    },
+    {
+      "beatId": "access",
+      "samples": 744000,
+      "startSample": 3774728,
+      "correlation": 0.999987234243629
+    },
+    {
+      "beatId": "pkceBeat",
+      "samples": 819534,
+      "startSample": 4559528,
+      "correlation": 0.9999880886819993
+    },
+    {
+      "beatId": "recap",
+      "samples": 935236,
+      "startSample": 5419862,
+      "correlation": 0.9999876969912359
+    }
+  ],
+  "subjectiveListening": "not-verified"
+}

@@ -1,0 +1,27 @@
+{
+  "revision": 1,
+  "structure": "passed",
+  "semanticReview": {
+    "revision": 1,
+    "reviewer": "Codex / RFC 6749・RFC 9700確認",
+    "fixes": [
+      "認可とログインを分け、認可コードとアクセストークンの用途を区別した",
+      "公開クライアントのPKCE必須、機密クライアントの推奨を明示した",
+      "図の登場人物、交換順序、ナレーションの用語を確認した"
+    ],
+    "unresolved": [
+      "正常系の概念説明に限定。stateやPKCEのCSRF要件、エラー経路、トークン検証の詳細は省略している",
+      "ブラウザを通るコード返却は図中で一本の矢印に簡略化した"
+    ],
+    "createdAt": "2026-09-08T13:55:11.682Z"
+  },
+  "warnings": [],
+  "audio": {
+    "beats": 8,
+    "cached": 8
+  },
+  "frames": 3990,
+  "duration": 133,
+  "render": "passed",
+  "manualPlayback": "not-verified"
+}

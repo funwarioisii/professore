@@ -1,0 +1,19 @@
+{
+  "date": "2026-09-08T14:17:54.433Z",
+  "results": [
+    "不正JSONの位置付きエラーと復帰・JSON取り込み・構造検証・保存",
+    "beat台本編集とrevision 2のJSON書き出し",
+    "Mermaid日本語ラベルを描画",
+    "MP4の実デコード・時間進行・80秒地点へのシーク",
+    "ブラウザの保存リンクからMP4取得"
+  ],
+  "playback": {
+    "advanced": 0.274639,
+    "duration": 133,
+    "width": 1920,
+    "height": 1080,
+    "error": null,
+    "seek": 80
+  },
+  "errors": []
+}

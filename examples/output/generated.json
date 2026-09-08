@@ -1,0 +1,143 @@
+{
+  "revision": 1,
+  "provider": "macos-say-pcm-v1:25.5.0",
+  "settings": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "theme": "midnight",
+    "font": "Hiragino Sans",
+    "subtitles": true,
+    "tts": {
+      "provider": "macos-say",
+      "voice": "Kyoko",
+      "rate": 185
+    },
+    "pronunciations": {
+      "OAuth": "オーオース",
+      "API": "エーピーアイ",
+      "PKCE": "ピクシー",
+      "HTTP": "エイチティーティーピー"
+    }
+  },
+  "timeline": {
+    "beats": [
+      {
+        "key": "0066ffa98c0bd83761de29455e9bdf761a607580e6541a05a90f2cf05a980ef5",
+        "file": "audio-why.wav",
+        "samples": 648116,
+        "cached": true,
+        "sceneId": "delegation",
+        "beatId": "why",
+        "startFrame": 0,
+        "endFrame": 431,
+        "speechStartSample": 12000,
+        "speechEndSample": 660116,
+        "before": 12000,
+        "after": 28800
+      },
+      {
+        "key": "63f1efc1ecebd76a7b32beeca689e7bc77ed28905a823ff5e4c9682d9ae7e070",
+        "file": "audio-who.wav",
+        "samples": 673304,
+        "cached": true,
+        "sceneId": "delegation",
+        "beatId": "who",
+        "startFrame": 431,
+        "endFrame": 877,
+        "speechStartSample": 700916,
+        "speechEndSample": 1374220,
+        "before": 12000,
+        "after": 28800
+      },
+      {
+        "key": "8b3fa6c7db3b2e8254e7ee825adb1bc19e043175e1f5a22d4d954d5a5dc916b0",
+        "file": "audio-request.wav",
+        "samples": 758250,
+        "cached": true,
+        "sceneId": "redirect",
+        "beatId": "request",
+        "startFrame": 877,
+        "endFrame": 1377,
+        "speechStartSample": 1415020,
+        "speechEndSample": 2173270,
+        "before": 12000,
+        "after": 28800
+      },
+      {
+        "key": "ad8c401c561d4e0f7d464fe490db9e31e4b409820730fa6969509a8e67dffc7e",
+        "file": "audio-callback.wav",
+        "samples": 718677,
+        "cached": true,
+        "sceneId": "redirect",
+        "beatId": "callback",
+        "startFrame": 1377,
+        "endFrame": 1851,
+        "speechStartSample": 2214070,
+        "speechEndSample": 2932747,
+        "before": 12000,
+        "after": 28800
+      },
+      {
+        "key": "9361016dad25272b269eca9fd10e715d692c11d21b7d5cbf618a0886f3505257",
+        "file": "audio-exchangeBeat.wav",
+        "samples": 760381,
+        "cached": true,
+        "sceneId": "exchangeScene",
+        "beatId": "exchangeBeat",
+        "startFrame": 1851,
+        "endFrame": 2352,
+        "speechStartSample": 2973547,
+        "speechEndSample": 3733928,
+        "before": 12000,
+        "after": 28800
+      },
+      {
+        "key": "9ed2ac0ee31fc0dc7d57bd137f7531dcc395a01c32b9b1c0772e278e12145959",
+        "file": "audio-access.wav",
+        "samples": 744000,
+        "cached": true,
+        "sceneId": "exchangeScene",
+        "beatId": "access",
+        "startFrame": 2352,
+        "endFrame": 2843,
+        "speechStartSample": 3774728,
+        "speechEndSample": 4518728,
+        "before": 12000,
+        "after": 28800
+      },
+      {
+        "key": "66d1a2731d01ea79df5c06e99fae4dc996f3bd85dbfe347595c814e9abf6aee8",
+        "file": "audio-pkceBeat.wav",
+        "samples": 819534,
+        "cached": true,
+        "sceneId": "security",
+        "beatId": "pkceBeat",
+        "startFrame": 2843,
+        "endFrame": 3380,
+        "speechStartSample": 4559528,
+        "speechEndSample": 5379062,
+        "before": 12000,
+        "after": 28800
+      },
+      {
+        "key": "031ee43ef2413bdeca3496e3161c3f560271db47465e5c445ea5607a4c2c210b",
+        "file": "audio-recap.wav",
+        "samples": 935236,
+        "cached": true,
+        "sceneId": "security",
+        "beatId": "recap",
+        "startFrame": 3380,
+        "endFrame": 3990,
+        "speechStartSample": 5419862,
+        "speechEndSample": 6355098,
+        "before": 12000,
+        "after": 28800
+      }
+    ],
+    "totalFrames": 3990,
+    "totalSamples": 6383898,
+    "fps": 30
+  },
+  "createdAt": "2026-09-08T14:13:45.782Z"
+}

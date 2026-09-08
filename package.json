@@ -1,0 +1,43 @@
+{
+  "name": "professore",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "node --import tsx scripts/build.ts",
+    "start": "node --import tsx src/server.ts",
+    "cli": "node --import tsx src/cli.ts",
+    "mcp": "node --import tsx src/mcp.ts",
+    "test": "node --import tsx --test tests/*.test.ts",
+    "check": "tsc --noEmit",
+    "e2e": "node --import tsx scripts/e2e.ts",
+    "e2e:ui": "node --import tsx scripts/ui-e2e.ts",
+    "e2e:lifecycle": "node --import tsx scripts/lifecycle.ts",
+    "format": "prettier --write src scripts tests package.json tsconfig.json"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "@xmldom/xmldom": "^0.9.12",
+    "dompurify": "^3.4.14",
+    "express": "^5.2.1",
+    "marked": "^18.0.11",
+    "mermaid": "^11.17.2",
+    "playwright": "^1.62.1",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "zod": "^4.5.4"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.4.0",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.5",
+    "esbuild": "^0.28.2",
+    "prettier": "^3.9.6",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2"
+  }
+}
