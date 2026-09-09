@@ -1,6 +1,6 @@
 # 検証結果
 
-2026-09-08、macOS実機（Apple Silicon）、Node 26.0.0、FFmpeg 8.1.1、Chromium 151 / Playwright 1.62.1で検証しました。依存の詳細はpackage-lock.jsonに固定されています。
+2026-09-08、macOS実機（Apple Silicon）、Node 26.0.0、FFmpeg 8.1.1、Chromium 151 / Playwright 1.62.1で検証しました。初期サンプルの検証環境です。現在の依存は `bun.lock`、実行環境は `mise.toml` に固定されています。
 
 ## 実音声・MP4
 
@@ -15,12 +15,14 @@
 
 ## 自動・プロトコル検証
 
-- `npm test`：9件成功。位置付きスキーマエラー、ID・アセット参照、SVG安全性、100beatの累積丸め、音声キャッシュキー、発音置換、競合・履歴・レビュー、失敗再試行・キャンセル、イベントの時系列とフェードを検証。
-- `npm run check`：TypeScript型検査成功。
-- `npm run build`：ブラウザバンドル・JSON Schema生成成功。
-- `npm run e2e`：MCP SDKのstdio Clientから検証・保存・意味レビュー・ジョブ開始。接続切断後もMP4生成完了。視覚変更は2/2音声を再利用、台本変更は1/2を再利用してタイムライン更新。競合409、キャンセル後の非公開、再実行、Origin/Host拒否を確認。[証跡](evidence/e2e.json)
-- `npm run e2e:lifecycle`：別ポート・一時保存先で実サービスをSIGKILLし、再起動時のinterrupted状態と成功済み成果物の保持を確認。生成中の編集を混入させず元revisionで再実行。存在しない声はbeat位置付きの失敗。[証跡](evidence/lifecycle.json)
-- `npm run e2e:ui`：JSON取り込み、構造検証、保存、beat台本編集、revision 2のJSON書き出し、Mermaidの日本語ラベル、動画の再生・シーク・保存リンクを検証。[証跡](evidence/ui.json)、[画面](evidence/ui.png)
+コマンド表記は現在のBun版です。2026-09-09の移行時に型検査・9件のテスト・ビルド、MCP・再起動復旧のE2EをBun 1.3.14（mise 2026.5.1）で再検証しています。UI・音声同期の証跡は初期版の実行記録です。
+
+- `bun test`：9件成功。位置付きスキーマエラー、ID・アセット参照、SVG安全性、100beatの累積丸め、音声キャッシュキー、発音置換、競合・履歴・レビュー、失敗再試行・キャンセル、イベントの時系列とフェードを検証。
+- `bun run check`：TypeScript型検査成功。
+- `bun run build`：ブラウザバンドル・JSON Schema生成成功。
+- `bun run e2e`：MCP SDKのstdio Clientから検証・保存・意味レビュー・ジョブ開始。接続切断後もMP4生成完了。視覚変更は2/2音声を再利用、台本変更は1/2を再利用してタイムライン更新。競合409、キャンセル後の非公開、再実行、Origin/Host拒否を確認。[証跡](evidence/e2e.json)
+- `bun run e2e:lifecycle`：別ポート・一時保存先で実サービスをSIGKILLし、再起動時のinterrupted状態と成功済み成果物の保持を確認。生成中の編集を混入させず元revisionで再実行。存在しない声はbeat位置付きの失敗。[証跡](evidence/lifecycle.json)
+- `bun run e2e:ui`：JSON取り込み、構造検証、保存、beat台本編集、revision 2のJSON書き出し、Mermaidの日本語ラベル、動画の再生・シーク・保存リンクを検証。[証跡](evidence/ui.json)、[画面](evidence/ui.png)
 - `skill-creator` の `quick_validate.py`：同梱Skillの構造検証成功。Skill記載のCLI操作を実行し、同じ流れをMCPプロトコルでも検証しました。
 
 検証中に、MermaidのHTMLラベル設定、レイアウトのCSS衝突、隠し保存先からの成果物配信、無効なmacOS音声名の暗黙フォールバック、SVGの巻き戻し時の強調残りを修正しています。

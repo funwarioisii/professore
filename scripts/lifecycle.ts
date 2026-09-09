@@ -25,7 +25,7 @@ async function api(route: string, body?: unknown) {
   return d;
 }
 async function start() {
-  child = spawn(process.execPath, ["--import", "tsx", "src/server.ts"], {
+  child = spawn(process.execPath, ["src/server.ts"], {
     env: {
       ...process.env,
       PROFESSORE_HOME: temp,

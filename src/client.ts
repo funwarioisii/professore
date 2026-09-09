@@ -10,7 +10,7 @@ export async function api(route: string, body?: unknown, method?: string) {
     });
   } catch {
     throw Error(
-      "ローカルサービスに接続できません。別ターミナルで npm start を実行してください",
+      "ローカルサービスに接続できません。別ターミナルで bun run start を実行してください",
     );
   }
   const result = await response.json();

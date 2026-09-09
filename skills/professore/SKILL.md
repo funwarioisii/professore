@@ -5,7 +5,7 @@ description: Professoreで日本語の解説MP4を制作・改訂する。構造
 
 # 解説MP4の制作
 
-このリポジトリの [スキーマ](../../schema/project.schema.json) と [動作サンプル](../../examples/oauth.json) を読む。サービスは利用者が別ターミナルで `npm start` を起動し、CLIとMCPの処理を引き受ける。MCPの接続終了はジョブを停止しない。
+このリポジトリの [スキーマ](../../schema/project.schema.json) と [動作サンプル](../../examples/oauth.json) を読む。サービスは利用者が別ターミナルで `bun run start` を起動し、CLIとMCPの処理を引き受ける。MCPの接続終了はジョブを停止しない。Bunは `mise.toml` の固定バージョンを使い、シェルでmiseを有効化していない場合は `mise exec -- bun ...` で実行する。
 
 ## 原稿を作る
 
@@ -37,12 +37,12 @@ MCPの基本手順：
 CLIの場合（サービスは別ターミナル）：
 
 ```sh
-npm run cli -- validate examples/oauth.json
-npm run cli -- import examples/oauth.json
-npm run cli -- review oauth examples/review.json
-npm run cli -- render oauth
-npm run cli -- wait JOB_ID
-npm run cli -- download JOB_ID video.mp4 ./oauth.mp4
+bun run cli validate examples/oauth.json
+bun run cli import examples/oauth.json
+bun run cli review oauth examples/review.json
+bun run cli render oauth
+bun run cli wait JOB_ID
+bun run cli download JOB_ID video.mp4 ./oauth.mp4
 ```
 
 同梱レビューは同梱サンプル専用。新しい原稿へそのまま流用しない。

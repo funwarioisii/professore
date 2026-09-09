@@ -2,7 +2,7 @@
 
 ## 採用構成
 
-TypeScript、React 19、Zod、Express、Mermaid 11、Playwright Chromium、FFmpeg、macOS `say`。JSON・アセット・生成物をローカル保存する。CLIとstdio MCPは、独立したローカルHTTPサービスへ同じ操作を依頼する。UIに処理を持たせず、サービスが唯一の書き込み主体になる。
+Bun（miseでバージョン固定）、TypeScript、React 19、Zod、Express、Mermaid 11、Playwright Chromium、FFmpeg、macOS `say`。JSON・アセット・生成物をローカル保存する。CLIとstdio MCPは、独立したローカルHTTPサービスへ同じ操作を依頼する。UIに処理を持たせず、サービスが唯一の書き込み主体になる。
 
 Remotionは検討したが、今回のbeat境界の表示／強調と短いフェードには、共通Reactスライドを必要な状態だけスクリーンショットにし、FFmpegで連続フレーム化する構成を選択した。全フレームのブラウザ描画を避けられる。UIのiframeと動画生成は同じ `Slide` / `renderSlide` を使う。任意アニメーションや一般的な動画編集を追加する際は再検討する。
 
@@ -29,3 +29,7 @@ Remotionは検討したが、今回のbeat境界の表示／強調と短いフ�
 ## 境界
 
 自動の意味理解・事実判定は実装しない。ホストAIが出典、簡略化、矛盾、説明の順序をレビューする。UIの構造検証合格を内容の正しさとして表示しない。外部資料を自動取得せず、アセットの取り込みは明示的なCLI操作またはJSONの埋め込みで行う。
+
+## Bun / miseへの移行（2026-09-09）
+
+依存管理とTypeScript実行をBunに統一し、tsxを削除。既存依存の解決結果を `bun.lock` へ移行した。[Bunのロックファイル仕様](https://bun.sh/docs/pm/lockfile) に従い、CIではfrozen installを使う。開発・CIは同じ `mise.toml` のBun 1.3.14を使い、[miseのCI手順](https://mise.jdx.dev/continuous-integration.html) に沿って `mise exec` / `mise run` で実行する。

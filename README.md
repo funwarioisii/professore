@@ -8,15 +8,17 @@
 
 ## 起動（macOS）
 
-macOS 14以降、Node.js 22/24/26、FFmpegが必要です。macOSのシステム設定で日本語の声 **Kyoko** をダウンロードしてください。`say -v '?'` で確認できます。
+macOS 14以降、mise、FFmpegが必要です。Bun 1.3.14を `mise.toml` で固定しています。macOSのシステム設定で日本語の声 **Kyoko** をダウンロードしてください。`say -v '?'` で確認できます。
 
 ```sh
-brew install node ffmpeg
-npm ci
-npx playwright install chromium
-npm run build
-npm start
+brew install mise ffmpeg
+mise trust
+mise install
+mise run setup
+mise run start
 ```
+
+`mise run setup` はロック済み依存・Chromiumのインストールとビルドを行います。シェルでmiseを有効化していない場合、以下の `bun` コマンドには `mise exec --` を前置してください（例：`mise exec -- bun run cli list`）。
 
 [制作スタジオ](http://127.0.0.1:4318) を開き、`examples/oauth.json` を取り込みます。「構造検証」→「保存」→「MP4を生成」で制作できます。「生成・成果物」から動画や静止画を確認・保存します。
 
@@ -27,13 +29,13 @@ npm start
 サービスを別のターミナルで起動した状態で実行します。
 
 ```sh
-npm run cli -- validate examples/oauth.json
-npm run cli -- import examples/oauth.json
-npm run cli -- review oauth examples/review.json
-npm run cli -- render oauth
+bun run cli validate examples/oauth.json
+bun run cli import examples/oauth.json
+bun run cli review oauth examples/review.json
+bun run cli render oauth
 # 返された id を以下の JOB_ID に指定
-npm run cli -- wait JOB_ID
-npm run cli -- download JOB_ID video.mp4 ./oauth.mp4
+bun run cli wait JOB_ID
+bun run cli download JOB_ID video.mp4 ./oauth.mp4
 ```
 
 `examples/review.json` は同梱サンプル専用です。異なる原稿に流用せず、AIまたは人が内容を確認してレビューを記録してください。構造検証・意味レビュー・MP4出力成功は別々の状態です。
@@ -66,17 +68,18 @@ JSON取り込みは埋め込まれたアセットだけを読み、原稿中の�
 
 ## MCP接続
 
-既定はstdioです。まず `npm start` を独立したターミナルで起動してください。MCPはHTTP経由でそのサービスへ処理を依頼する薄いアダプターです。stdoutはJSON-RPC専用です。**MCPのcommandに `npm run mcp` を使わないでください**（npmの案内がstdoutへ出るため）。
+既定はstdioです。まず `bun run start` を独立したターミナルで起動してください。MCPはHTTP経由でそのサービスへ処理を依頼する薄いアダプターです。stdoutはJSON-RPC専用です。MCPはmiseからBunで直接起動します。
 
-MCP対応クライアントに次の設定を追加します。`cwd`に依存しないよう絶対パスを使用してください。
+MCP対応クライアントに次の設定を追加します。`cwd`に依存しないよう絶対パスを使用してください。miseのパスは `command -v mise` で確認できます。
 
 ```json
 {
   "mcpServers": {
     "professore": {
-      "command": "/absolute/path/to/node",
+      "command": "/absolute/path/to/mise",
       "args": [
-        "--import", "/absolute/path/to/professore/node_modules/tsx/dist/loader.mjs",
+        "-C", "/absolute/path/to/professore",
+        "exec", "--", "bun",
         "/absolute/path/to/professore/src/mcp.ts"
       ]
     }
@@ -95,7 +98,7 @@ AIには [制作Skill](skills/professore/SKILL.md) を読ませてください�
 既定はサービスを起動したディレクトリの `.professore/` です。UIにも絶対パスを表示します。
 
 ```sh
-PROFESSORE_HOME=/absolute/path/to/data PROFESSORE_PORT=4318 npm start
+PROFESSORE_HOME=/absolute/path/to/data PROFESSORE_PORT=4318 bun run start
 ```
 
 `PROFESSORE_PORT` を変えた場合はCLI・MCPにも同じ環境変数を渡します。データディレクトリは1サービスが所有し、多重起動を拒否します。
@@ -123,12 +126,12 @@ PROFESSORE_HOME=/absolute/path/to/data PROFESSORE_PORT=4318 npm start
 ## 検証・制約
 
 ```sh
-npm test
-npm run check
-npm run build
-npm run e2e:ui  # ローカルUIの編集・再生・保存
-npm run e2e:lifecycle  # 一時サービスの再起動復旧
-npm run e2e  # 起動中サービス・macOSの日本語音声・Chromium・FFmpegが必要
+bun test
+bun run check
+bun run build
+bun run e2e:ui  # ローカルUIの編集・再生・保存
+bun run e2e:lifecycle  # 一時サービスの再起動復旧
+bun run e2e  # 起動中サービス・macOSの日本語音声・Chromium・FFmpegが必要
 ```
 
 [設計・採用理由](docs/design.md)、[検証結果と制約](docs/verification.md) を参照してください。外部URLに依存せずレンダリングし、ローカルサービスは127.0.0.1でのみ待ち受け、Host/Originを検証します。

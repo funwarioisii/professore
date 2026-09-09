@@ -22,7 +22,7 @@ const connect = async () =>
   client.connect(
     new StdioClientTransport({
       command: process.execPath,
-      args: ["--import", "tsx", "src/mcp.ts"],
+      args: ["src/mcp.ts"],
       cwd: process.cwd(),
       env: { ...process.env } as Record<string, string>,
       stderr: "pipe",

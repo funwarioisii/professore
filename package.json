@@ -4,19 +4,19 @@
   "private": true,
   "type": "module",
   "engines": {
-    "node": ">=22"
+    "bun": ">=1.3.14"
   },
   "scripts": {
-    "build": "node --import tsx scripts/build.ts",
-    "start": "node --import tsx src/server.ts",
-    "cli": "node --import tsx src/cli.ts",
-    "mcp": "node --import tsx src/mcp.ts",
-    "test": "node --import tsx --test tests/*.test.ts",
-    "check": "tsc --noEmit",
-    "e2e": "node --import tsx scripts/e2e.ts",
-    "e2e:ui": "node --import tsx scripts/ui-e2e.ts",
-    "e2e:lifecycle": "node --import tsx scripts/lifecycle.ts",
-    "format": "prettier --write src scripts tests package.json tsconfig.json"
+    "build": "bun scripts/build.ts",
+    "start": "bun src/server.ts",
+    "cli": "bun src/cli.ts",
+    "mcp": "bun src/mcp.ts",
+    "test": "bun test ./tests",
+    "check": "bun --bun run tsc --noEmit",
+    "e2e": "bun scripts/e2e.ts",
+    "e2e:ui": "bun scripts/ui-e2e.ts",
+    "e2e:lifecycle": "bun scripts/lifecycle.ts",
+    "format": "bun --bun run prettier --write src scripts tests package.json tsconfig.json"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.30.0",
@@ -37,7 +37,7 @@
     "@types/react-dom": "^19.2.5",
     "esbuild": "^0.28.2",
     "prettier": "^3.9.6",
-    "tsx": "^4.23.13",
     "typescript": "^7.0.2"
-  }
+  },
+  "packageManager": "bun@1.3.14"
 }

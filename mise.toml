@@ -1,0 +1,14 @@
+[tools]
+bun = "1.3.14"
+
+[tasks.setup]
+description = "Install locked dependencies, Chromium, and build the studio"
+run = ["bun install --frozen-lockfile", "bunx --bun playwright install chromium", "bun run build"]
+
+[tasks.start]
+description = "Start the local studio"
+run = "bun run start"
+
+[tasks.check]
+description = "Typecheck, test, and build"
+run = ["bun run check", "bun run test", "bun run build"]

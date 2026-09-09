@@ -111,16 +111,16 @@ try {
     default:
       result = {
         usage: [
-          "npm start  # サービスを別ターミナルで起動",
-          "npm run cli -- validate <project.json>",
-          "npm run cli -- import <project.json> [expectedRevision=0]",
-          "npm run cli -- list | get <id> [revision] | export <id> <file>",
-          "npm run cli -- scene <id> <revision> <sceneId> <scene.json>",
-          "npm run cli -- review <id> <review.json>",
-          "npm run cli -- audio|preview|render <id> [revision]",
-          "npm run cli -- status|wait|cancel|retry <jobId>",
-          "npm run cli -- download <jobId> [artifact=video.mp4] [output]",
-          "npm run cli -- asset <project.json> <assetId> <svg/png/jpeg>",
+          "bun run start  # サービスを別ターミナルで起動",
+          "bun run cli validate <project.json>",
+          "bun run cli import <project.json> [expectedRevision=0]",
+          "bun run cli list | get <id> [revision] | export <id> <file>",
+          "bun run cli scene <id> <revision> <sceneId> <scene.json>",
+          "bun run cli review <id> <review.json>",
+          "bun run cli audio|preview|render <id> [revision]",
+          "bun run cli status|wait|cancel|retry <jobId>",
+          "bun run cli download <jobId> [artifact=video.mp4] [output]",
+          "bun run cli asset <project.json> <assetId> <svg/png/jpeg>",
         ],
       };
   }
