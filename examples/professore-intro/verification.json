@@ -1,0 +1,17 @@
+{
+  "provider": "aquestalk-player",
+  "preset": "れいむ",
+  "jobId": "56e69d6d-5f39-4609-880f-59ddac202418",
+  "playback": {
+    "duration": 98.833333,
+    "width": 1920,
+    "height": 1080,
+    "played": 1.069701,
+    "seek": 90
+  },
+  "subjectiveListening": "not-verified",
+  "attachmentUrl": "https://github.com/user-attachments/assets/e96b4624-a0a0-45d1-8fcd-eb16eb0a8379",
+  "structure": "passed",
+  "render": "passed",
+  "warnings": []
+}

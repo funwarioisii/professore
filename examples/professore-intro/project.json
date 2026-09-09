@@ -1,0 +1,372 @@
+{
+  "schemaVersion": 1,
+  "id": "professore-intro",
+  "title": "Professore｜会話から、解説動画へ",
+  "language": "ja-JP",
+  "audience": "CodexやClaude Codeから解説動画を作りたい人",
+  "prerequisites": [
+    "macOSとターミナルの基本操作"
+  ],
+  "learningGoals": [
+    "Professoreの役割を理解する",
+    "MCPとSkillを登録して制作を依頼できる",
+    "プレビュー確認と改訂の流れを理解する"
+  ],
+  "outOfScope": [
+    "全CLIコマンドの説明",
+    "音声アプリの詳細設定"
+  ],
+  "targetDuration": 95,
+  "sources": [
+    {
+      "title": "Professoreの実装と利用ガイド",
+      "url": "https://github.com/funwarioisii/professore",
+      "note": "このリポジトリの実装・利用ガイドをもとに構成"
+    }
+  ],
+  "settings": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "theme": "midnight",
+    "font": "Hiragino Sans",
+    "subtitles": true,
+    "tts": {
+      "provider": "aquestalk-player",
+      "preset": "れいむ",
+      "cacheVersion": "intro-1"
+    },
+    "pronunciations": {
+      "Professore": "プロフェッソーレ",
+      "Codex": "コーデックス",
+      "Claude Code": "クロードコード",
+      "MCP": "エムシーピー",
+      "Skill": "スキル",
+      "MP4": "エムピーフォー",
+      "SVG": "エスブイジー",
+      "Mermaid": "マーメイド",
+      "macOS": "マックオーエス",
+      "mise": "ミーズ",
+      "Bun": "バン"
+    }
+  },
+  "assets": {
+    "pipeline": {
+      "type": "svg",
+      "data": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1400 430\"><g id=\"ask\"><rect x=\"20\" y=\"110\" width=\"305\" height=\"210\" rx=\"24\" fill=\"#19394b\" stroke=\"#72cfc5\" stroke-width=\"3\"/><text x=\"46\" y=\"156\" font-size=\"22\" fill=\"#72cfc5\">01</text><text x=\"172\" y=\"220\" font-size=\"34\" text-anchor=\"middle\" fill=\"#ffffff\">会話</text><text x=\"172\" y=\"270\" font-size=\"23\" text-anchor=\"middle\" fill=\"#b8d3df\">テーマ・読者・目標</text></g><path d=\"M332 213 L363 213 M353 201 L365 213 L353 225\" stroke=\"#fbbf24\" stroke-width=\"4\" fill=\"none\"/><g id=\"script\"><rect x=\"370\" y=\"110\" width=\"305\" height=\"210\" rx=\"24\" fill=\"#19394b\" stroke=\"#72cfc5\" stroke-width=\"3\"/><text x=\"396\" y=\"156\" font-size=\"22\" fill=\"#72cfc5\">02</text><text x=\"522\" y=\"220\" font-size=\"34\" text-anchor=\"middle\" fill=\"#ffffff\">原稿と図</text><text x=\"522\" y=\"270\" font-size=\"23\" text-anchor=\"middle\" fill=\"#b8d3df\">AIが構成を設計</text></g><path d=\"M682 213 L713 213 M703 201 L715 213 L703 225\" stroke=\"#fbbf24\" stroke-width=\"4\" fill=\"none\"/><g id=\"voice\"><rect x=\"720\" y=\"110\" width=\"305\" height=\"210\" rx=\"24\" fill=\"#19394b\" stroke=\"#72cfc5\" stroke-width=\"3\"/><text x=\"746\" y=\"156\" font-size=\"22\" fill=\"#72cfc5\">03</text><text x=\"872\" y=\"220\" font-size=\"34\" text-anchor=\"middle\" fill=\"#ffffff\">ゆっくり音声</text><text x=\"872\" y=\"270\" font-size=\"23\" text-anchor=\"middle\" fill=\"#b8d3df\">実音声に同期</text></g><path d=\"M1032 213 L1063 213 M1053 201 L1065 213 L1053 225\" stroke=\"#fbbf24\" stroke-width=\"4\" fill=\"none\"/><g id=\"movie\"><rect x=\"1070\" y=\"110\" width=\"305\" height=\"210\" rx=\"24\" fill=\"#19394b\" stroke=\"#72cfc5\" stroke-width=\"3\"/><text x=\"1096\" y=\"156\" font-size=\"22\" fill=\"#72cfc5\">04</text><text x=\"1222\" y=\"220\" font-size=\"34\" text-anchor=\"middle\" fill=\"#ffffff\">解説MP4</text><text x=\"1222\" y=\"270\" font-size=\"23\" text-anchor=\"middle\" fill=\"#b8d3df\">字幕と図を合成</text></g></svg>"
+    },
+    "connect": {
+      "type": "svg",
+      "data": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1400 430\"><g id=\"prepare\"><rect x=\"20\" y=\"110\" width=\"305\" height=\"210\" rx=\"24\" fill=\"#19394b\" stroke=\"#72cfc5\" stroke-width=\"3\"/><text x=\"46\" y=\"156\" font-size=\"22\" fill=\"#72cfc5\">01</text><text x=\"172\" y=\"220\" font-size=\"34\" text-anchor=\"middle\" fill=\"#ffffff\">Macで準備</text><text x=\"172\" y=\"270\" font-size=\"23\" text-anchor=\"middle\" fill=\"#b8d3df\">mise・Bun・FFmpeg</text></g><path d=\"M332 213 L363 213 M353 201 L365 213 L353 225\" stroke=\"#fbbf24\" stroke-width=\"4\" fill=\"none\"/><g id=\"service\"><rect x=\"370\" y=\"110\" width=\"305\" height=\"210\" rx=\"24\" fill=\"#19394b\" stroke=\"#72cfc5\" stroke-width=\"3\"/><text x=\"396\" y=\"156\" font-size=\"22\" fill=\"#72cfc5\">02</text><text x=\"522\" y=\"220\" font-size=\"34\" text-anchor=\"middle\" fill=\"#ffffff\">サービス起動</text><text x=\"522\" y=\"270\" font-size=\"23\" text-anchor=\"middle\" fill=\"#b8d3df\">ローカルで生成</text></g><path d=\"M682 213 L713 213 M703 201 L715 213 L703 225\" stroke=\"#fbbf24\" stroke-width=\"4\" fill=\"none\"/><g id=\"register\"><rect x=\"720\" y=\"110\" width=\"305\" height=\"210\" rx=\"24\" fill=\"#19394b\" stroke=\"#72cfc5\" stroke-width=\"3\"/><text x=\"746\" y=\"156\" font-size=\"22\" fill=\"#72cfc5\">03</text><text x=\"872\" y=\"220\" font-size=\"34\" text-anchor=\"middle\" fill=\"#ffffff\">MCP ＋ Skill</text><text x=\"872\" y=\"270\" font-size=\"23\" text-anchor=\"middle\" fill=\"#b8d3df\">READMEをコピペ</text></g><path d=\"M1032 213 L1063 213 M1053 201 L1065 213 L1053 225\" stroke=\"#fbbf24\" stroke-width=\"4\" fill=\"none\"/><g id=\"request\"><rect x=\"1070\" y=\"110\" width=\"305\" height=\"210\" rx=\"24\" fill=\"#19394b\" stroke=\"#72cfc5\" stroke-width=\"3\"/><text x=\"1096\" y=\"156\" font-size=\"22\" fill=\"#72cfc5\">04</text><text x=\"1222\" y=\"220\" font-size=\"34\" text-anchor=\"middle\" fill=\"#ffffff\">AIへ依頼</text><text x=\"1222\" y=\"270\" font-size=\"23\" text-anchor=\"middle\" fill=\"#b8d3df\">Codex / Claude Code</text></g></svg>"
+    },
+    "revise": {
+      "type": "svg",
+      "data": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1400 430\"><g id=\"check\"><rect x=\"20\" y=\"110\" width=\"305\" height=\"210\" rx=\"24\" fill=\"#19394b\" stroke=\"#72cfc5\" stroke-width=\"3\"/><text x=\"46\" y=\"156\" font-size=\"22\" fill=\"#72cfc5\">01</text><text x=\"172\" y=\"220\" font-size=\"34\" text-anchor=\"middle\" fill=\"#ffffff\">確認</text><text x=\"172\" y=\"270\" font-size=\"23\" text-anchor=\"middle\" fill=\"#b8d3df\">図・読み方・字幕</text></g><path d=\"M332 213 L363 213 M353 201 L365 213 L353 225\" stroke=\"#fbbf24\" stroke-width=\"4\" fill=\"none\"/><g id=\"fix\"><rect x=\"370\" y=\"110\" width=\"305\" height=\"210\" rx=\"24\" fill=\"#19394b\" stroke=\"#72cfc5\" stroke-width=\"3\"/><text x=\"396\" y=\"156\" font-size=\"22\" fill=\"#72cfc5\">02</text><text x=\"522\" y=\"220\" font-size=\"34\" text-anchor=\"middle\" fill=\"#ffffff\">会話で修正</text><text x=\"522\" y=\"270\" font-size=\"23\" text-anchor=\"middle\" fill=\"#b8d3df\">図を大きく、など</text></g><path d=\"M682 213 L713 213 M703 201 L715 213 L703 225\" stroke=\"#fbbf24\" stroke-width=\"4\" fill=\"none\"/><g id=\"reuse\"><rect x=\"720\" y=\"110\" width=\"305\" height=\"210\" rx=\"24\" fill=\"#19394b\" stroke=\"#72cfc5\" stroke-width=\"3\"/><text x=\"746\" y=\"156\" font-size=\"22\" fill=\"#72cfc5\">03</text><text x=\"872\" y=\"220\" font-size=\"34\" text-anchor=\"middle\" fill=\"#ffffff\">差分を再生成</text><text x=\"872\" y=\"270\" font-size=\"23\" text-anchor=\"middle\" fill=\"#b8d3df\">使える音声は再利用</text></g><path d=\"M1032 213 L1063 213 M1053 201 L1065 213 L1053 225\" stroke=\"#fbbf24\" stroke-width=\"4\" fill=\"none\"/><g id=\"export\"><rect x=\"1070\" y=\"110\" width=\"305\" height=\"210\" rx=\"24\" fill=\"#19394b\" stroke=\"#72cfc5\" stroke-width=\"3\"/><text x=\"1096\" y=\"156\" font-size=\"22\" fill=\"#72cfc5\">04</text><text x=\"1222\" y=\"220\" font-size=\"34\" text-anchor=\"middle\" fill=\"#ffffff\">MP4を保存</text><text x=\"1222\" y=\"270\" font-size=\"23\" text-anchor=\"middle\" fill=\"#b8d3df\">そのまま再生・共有</text></g></svg>"
+    }
+  },
+  "scenes": [
+    {
+      "id": "overview",
+      "title": "会話から、声と図のある解説へ。",
+      "purpose": "会話から、声と図のある解説へ。",
+      "layout": "full",
+      "body": "",
+      "elements": [
+        {
+          "id": "overviewDiagram",
+          "kind": "asset",
+          "asset": "pipeline",
+          "content": "",
+          "visible": true
+        }
+      ],
+      "beats": [
+        {
+          "id": "intro",
+          "narration": "Professoreは、会話で作った原稿を、声と図のある解説動画にするツールです。伝えたいテーマと、誰に説明するかを、いつものAIに頼みます。",
+          "before": 0.2,
+          "after": 0.5,
+          "events": [
+            {
+              "target": "overviewDiagram#ask",
+              "action": "highlight",
+              "at": "start",
+              "fade": 0
+            },
+            {
+              "target": "overviewDiagram#ask",
+              "action": "unhighlight",
+              "at": "end",
+              "fade": 0
+            },
+            {
+              "target": "overviewDiagram#script",
+              "action": "highlight",
+              "at": "start",
+              "fade": 0
+            },
+            {
+              "target": "overviewDiagram#script",
+              "action": "unhighlight",
+              "at": "end",
+              "fade": 0
+            }
+          ]
+        },
+        {
+          "id": "result",
+          "narration": "AIが台本と図を組み立て、Professoreが音声、字幕、図を合わせて動画にします。この動画も、ゆっくり音声で作っています。",
+          "before": 0.2,
+          "after": 0.5,
+          "events": [
+            {
+              "target": "overviewDiagram#voice",
+              "action": "highlight",
+              "at": "start",
+              "fade": 0
+            },
+            {
+              "target": "overviewDiagram#voice",
+              "action": "unhighlight",
+              "at": "end",
+              "fade": 0
+            },
+            {
+              "target": "overviewDiagram#movie",
+              "action": "highlight",
+              "at": "start",
+              "fade": 0
+            },
+            {
+              "target": "overviewDiagram#movie",
+              "action": "unhighlight",
+              "at": "end",
+              "fade": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "setup",
+      "title": "準備して、MCPとSkillをつなぐ。",
+      "purpose": "準備して、MCPとSkillをつなぐ。",
+      "layout": "full",
+      "body": "",
+      "elements": [
+        {
+          "id": "setupDiagram",
+          "kind": "asset",
+          "asset": "connect",
+          "content": "",
+          "visible": true
+        }
+      ],
+      "beats": [
+        {
+          "id": "requirements",
+          "narration": "まず、Macで必要なツールを準備し、Professoreのサービスを起動します。詳しい導入手順は、利用ガイドにまとめています。",
+          "before": 0.2,
+          "after": 0.5,
+          "events": [
+            {
+              "target": "setupDiagram#prepare",
+              "action": "highlight",
+              "at": "start",
+              "fade": 0
+            },
+            {
+              "target": "setupDiagram#prepare",
+              "action": "unhighlight",
+              "at": "end",
+              "fade": 0
+            },
+            {
+              "target": "setupDiagram#service",
+              "action": "highlight",
+              "at": "start",
+              "fade": 0
+            },
+            {
+              "target": "setupDiagram#service",
+              "action": "unhighlight",
+              "at": "end",
+              "fade": 0
+            }
+          ]
+        },
+        {
+          "id": "install",
+          "narration": "次に、READMEのコマンドでMCPとSkillを追加します。MCPは生成ツールとの接続、Skillは動画を作るための手順です。CodexとClaude Codeから使えます。",
+          "before": 0.2,
+          "after": 0.5,
+          "events": [
+            {
+              "target": "setupDiagram#register",
+              "action": "highlight",
+              "at": "start",
+              "fade": 0
+            },
+            {
+              "target": "setupDiagram#register",
+              "action": "unhighlight",
+              "at": "end",
+              "fade": 0
+            },
+            {
+              "target": "setupDiagram#request",
+              "action": "highlight",
+              "at": "start",
+              "fade": 0
+            },
+            {
+              "target": "setupDiagram#request",
+              "action": "unhighlight",
+              "at": "end",
+              "fade": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "design",
+      "title": "文章を並べるより、関係を見せる。",
+      "purpose": "全体はMermaid、部分はSVG。",
+      "layout": "full",
+      "body": "",
+      "elements": [
+        {
+          "id": "designFlow",
+          "kind": "mermaid",
+          "content": "flowchart LR\n A[理解してほしいこと] --> B[関係・順序を見せる]\n A --> C[部分を順番に示す]\n B --> D[Mermaid]\n C --> E[SVG]\n D --> F[台本と図を同期]\n E --> F",
+          "visible": true
+        }
+      ],
+      "beats": [
+        {
+          "id": "visual",
+          "narration": "仕組みを説明するときは、図を先に考えます。流れや関係にはMermaid、部品を順番に強調する場面にはSVGを使います。",
+          "before": 0.2,
+          "after": 0.5,
+          "events": [
+            {
+              "target": "designFlow",
+              "action": "highlight",
+              "at": "start",
+              "fade": 0
+            },
+            {
+              "target": "designFlow",
+              "action": "unhighlight",
+              "at": "end",
+              "fade": 0
+            }
+          ]
+        },
+        {
+          "id": "timing",
+          "narration": "音声の長さは、実際に生成して測ります。その長さに合わせて、図の表示や強調、字幕のタイミングを決めます。",
+          "before": 0.2,
+          "after": 0.5,
+          "events": [
+            {
+              "target": "designFlow",
+              "action": "highlight",
+              "at": "start",
+              "fade": 0
+            },
+            {
+              "target": "designFlow",
+              "action": "unhighlight",
+              "at": "end",
+              "fade": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "revision",
+      "title": "確認して、直して、MP4へ。",
+      "purpose": "確認して、直して、MP4へ。",
+      "layout": "full",
+      "body": "",
+      "elements": [
+        {
+          "id": "revisionDiagram",
+          "kind": "asset",
+          "asset": "revise",
+          "content": "",
+          "visible": true
+        }
+      ],
+      "beats": [
+        {
+          "id": "review",
+          "narration": "生成したら、図の読みやすさと、声の読み方、字幕を確認しましょう。図を大きくしたい、説明を短くしたい。そんな修正も会話で頼めます。",
+          "before": 0.2,
+          "after": 0.5,
+          "events": [
+            {
+              "target": "revisionDiagram#check",
+              "action": "highlight",
+              "at": "start",
+              "fade": 0
+            },
+            {
+              "target": "revisionDiagram#check",
+              "action": "unhighlight",
+              "at": "end",
+              "fade": 0
+            },
+            {
+              "target": "revisionDiagram#fix",
+              "action": "highlight",
+              "at": "start",
+              "fade": 0
+            },
+            {
+              "target": "revisionDiagram#fix",
+              "action": "unhighlight",
+              "at": "end",
+              "fade": 0
+            }
+          ]
+        },
+        {
+          "id": "finish",
+          "narration": "見た目だけの変更なら、音声は再利用。台本を直したら、その部分の音声を作り直します。完成したらMP4を保存。まずは一本、説明したいテーマから始めましょう。",
+          "before": 0.2,
+          "after": 0.5,
+          "events": [
+            {
+              "target": "revisionDiagram#reuse",
+              "action": "highlight",
+              "at": "start",
+              "fade": 0
+            },
+            {
+              "target": "revisionDiagram#reuse",
+              "action": "unhighlight",
+              "at": "end",
+              "fade": 0
+            },
+            {
+              "target": "revisionDiagram#export",
+              "action": "highlight",
+              "at": "start",
+              "fade": 0
+            },
+            {
+              "target": "revisionDiagram#export",
+              "action": "unhighlight",
+              "at": "end",
+              "fade": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

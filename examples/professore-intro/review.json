@@ -1,0 +1,12 @@
+{
+  "revision": 1,
+  "reviewer": "Codex",
+  "fixes": [
+    "AIが原稿を設計しProfessoreが生成する役割を分離して説明した",
+    "すべてがオフラインと誤解させず、Mac上の生成サービスと説明した",
+    "MCPとSkillの役割、導入ガイドとREADMEの使い分けを明示した",
+    "部分強調はSVG、関係の俯瞰はMermaidに分けた",
+    "実機で「れいむ」がAquesTalk1 f1・棒読みのプリセットであることを確認し採用した"
+  ],
+  "unresolved": []
+}
