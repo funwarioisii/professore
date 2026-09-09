@@ -5,7 +5,9 @@ description: Professoreで日本語の解説MP4を制作・改訂する。構造
 
 # 解説MP4の制作
 
-このリポジトリの [スキーマ](../../schema/project.schema.json) と [動作サンプル](../../examples/oauth.json) を読む。サービスは利用者が別ターミナルで `bun run start` を起動し、CLIとMCPの処理を引き受ける。MCPの接続終了はジョブを停止しない。Bunは `mise.toml` の固定バージョンを使い、シェルでmiseを有効化していない場合は `mise exec -- bun ...` で実行する。
+この `SKILL.md` の実体パスを確認し、所属する `skills/professore` の2階層上をProfessoreのリポジトリとして扱う。ユーザースコープのシンボリックリンクから読んだ場合は `realpath` でリンク先を解決する。現在の作業フォルダをProfessoreのリポジトリと仮定しない。以下の相対リンクは実体のSkillディレクトリを基準に解決する。CLIはリポジトリへ移動して実行するか、`mise -C <Professoreの絶対パス> exec -- bun <Professoreの絶対パス>/src/cli.ts ...` を使う。
+
+リポジトリの [スキーマ](../../schema/project.schema.json) と [動作サンプル](../../examples/oauth.json) を読む。サービスは利用者が別ターミナルで `bun run start` を起動し、CLIとMCPの処理を引き受ける。MCPの接続終了はジョブを停止しない。Bunは `mise.toml` の固定バージョンを使い、シェルでmiseを有効化していない場合は `mise exec -- bun ...` で実行する。
 
 ## 原稿を作る
 

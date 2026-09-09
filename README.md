@@ -66,32 +66,58 @@ JSON取り込みは埋め込まれたアセットだけを読み、原稿中の�
 
 音声キャッシュは読み上げ文・音声設定・辞書・プロバイダーバージョン・OS版をキーにします。見た目だけの変更は音声を再利用し、動画を再描画します。変更したbeatだけ音声を作り直し、後続タイムラインを再計算します。最終エンコードは全体を実行します。
 
-## MCP接続
+## Codex / Claude Codeへ追加（ユーザースコープ）
 
-既定はstdioです。まず `bun run start` を独立したターミナルで起動してください。MCPはHTTP経由でそのサービスへ処理を依頼する薄いアダプターです。stdoutはJSON-RPC専用です。MCPはmiseからBunで直接起動します。
+MCPはstdio、Skillは同梱の [制作手順](skills/professore/SKILL.md) です。両方を登録すると、別のプロジェクトからもProfessoreを使えます。MCPは独立サービスへ生成を依頼するため、先にリポジトリで `mise run start` を別ターミナルで起動してください。MCP接続を閉じてもサービスのジョブは継続します。
 
-MCP対応クライアントに次の設定を追加します。`cwd`に依存しないよう絶対パスを使用してください。miseのパスは `command -v mise` で確認できます。
+以下はこのリポジトリのルートで実行します。`mise trust` / `mise install` / `mise run setup` は済ませておいてください。
 
-```json
-{
-  "mcpServers": {
-    "professore": {
-      "command": "/absolute/path/to/mise",
-      "args": [
-        "-C", "/absolute/path/to/professore",
-        "exec", "--", "bun",
-        "/absolute/path/to/professore/src/mcp.ts"
-      ]
-    }
-  }
-}
+```sh
+PROFESSORE_DIR="$(pwd -P)"
+PROFESSORE_MISE="$(command -v mise)"
 ```
 
-設定キーはクライアントによって異なります。上記は一般的なJSON形式の例で、特定製品の設定UIを実機検証したものではありません。MCP SDK **1.30.0** のClient＋StdioClientTransportで接続・ツール呼び出し・切断後のジョブ完了を検証しています。グローバルインストールは不要です。
+### Codex
 
-ツール：`list_projects`, `get_project`, `save_project`, `update_scene`, `validate_project`, `record_review`, `start_job`, `get_job`, `list_jobs`, `cancel_job`, `retry_job`。`start_job` はすぐにジョブIDを返します。成果物は `http://127.0.0.1:4318/api/jobs/JOB_ID/artifacts/FILE` から取得できます。
+`codex mcp add` はユーザー設定（通常 `~/.codex/config.toml`、`CODEX_HOME` を設定している場合はその配下）へ登録します。`--scope` オプションは不要です。Skillはユーザー用の `~/.agents/skills` にリンクします。
 
-AIには [制作Skill](skills/professore/SKILL.md) を読ませてください。
+```sh
+codex mcp add professore -- "$PROFESSORE_MISE" \
+  -C "$PROFESSORE_DIR" exec -- bun "$PROFESSORE_DIR/src/mcp.ts"
+
+mkdir -p "$HOME/.agents/skills"
+ln -s "$PROFESSORE_DIR/skills/professore" "$HOME/.agents/skills/"
+
+codex mcp get professore
+```
+
+次のターン／新しいセッションで `$professore` を指定して制作を依頼できます。MCPが現在のセッションに表示されない場合はCodexを再起動してください。CLIとデスクトップアプリはユーザーのMCP設定を共有します。[公式MCP設定](https://learn.chatgpt.com/docs/extend/mcp?surface=cli)、[Skillのユーザースコープとリンク](https://learn.chatgpt.com/docs/build-skills)
+
+### Claude Code
+
+MCPは `--scope user` を指定します。指定しない場合の既定はlocalなので注意してください。Skillは `~/.claude/skills` にリンクします。
+
+```sh
+claude mcp add --scope user --transport stdio professore -- \
+  "$PROFESSORE_MISE" -C "$PROFESSORE_DIR" exec -- bun "$PROFESSORE_DIR/src/mcp.ts"
+
+mkdir -p "$HOME/.claude/skills"
+ln -s "$PROFESSORE_DIR/skills/professore" "$HOME/.claude/skills/"
+
+claude mcp get professore
+```
+
+Claude Codeの `/mcp` で接続を確認し、`/professore` でSkillを呼び出します。必要に応じて新しいセッションを開いてください。[公式MCPスコープ](https://code.claude.com/docs/en/mcp)、[個人用Skill](https://code.claude.com/docs/en/skills)
+
+### 更新・接続確認
+
+上記は初回登録用です。同名のMCPやSkillが既にある場合は先に内容を確認してください。Skillのリンク作成は既存の同名エントリーを上書きしません。リンク方式なので `git pull` 後のSkill更新にも追随します。リポジトリを移動・削除するとMCPの起動パスとSkillのリンク先が無効になるため、再登録してください。
+
+独立サービスの生存確認は `curl http://127.0.0.1:4318/api/health`、CLIの確認は `mise exec -- bun run cli list`。ポートを変える場合は、MCP追加時にもCodexなら `--env PROFESSORE_PORT=4320`、Claude Codeなら `--env PROFESSORE_PORT=4320` を `--` より前に指定します。
+
+確認したCLIは **Codex 0.146.0 / Claude Code 2.1.265**。Codexのユーザー登録とMCPプロトコル接続を検証しています。Claude Codeの例はインストール済みCLIの `mcp add --help` と公式ドキュメントで確認しています。
+
+ツール：`list_projects`, `get_project`, `save_project`, `update_scene`, `validate_project`, `record_review`, `start_job`, `get_job`, `list_jobs`, `cancel_job`, `retry_job`。`start_job` はすぐにジョブIDを返します。成果物は `http://127.0.0.1:4318/api/jobs/JOB_ID/artifacts/FILE` から取得できます。アプリ内に追加のLLM契約やAPIキーは不要です。
 
 ## 保存先・設定
 
