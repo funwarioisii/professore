@@ -126,29 +126,59 @@
           "type": "boolean"
         },
         "tts": {
-          "type": "object",
-          "properties": {
-            "provider": {
-              "type": "string",
-              "const": "macos-say"
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "provider": {
+                  "type": "string",
+                  "const": "macos-say"
+                },
+                "voice": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100
+                },
+                "rate": {
+                  "type": "integer",
+                  "minimum": 80,
+                  "maximum": 400
+                }
+              },
+              "required": [
+                "provider",
+                "voice",
+                "rate"
+              ],
+              "additionalProperties": false
             },
-            "voice": {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 100
-            },
-            "rate": {
-              "type": "integer",
-              "minimum": 80,
-              "maximum": 400
+            {
+              "type": "object",
+              "properties": {
+                "provider": {
+                  "type": "string",
+                  "const": "aquestalk-player"
+                },
+                "preset": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100
+                },
+                "cacheVersion": {
+                  "default": "1",
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100
+                }
+              },
+              "required": [
+                "provider",
+                "preset",
+                "cacheVersion"
+              ],
+              "additionalProperties": false
             }
-          },
-          "required": [
-            "provider",
-            "voice",
-            "rate"
-          ],
-          "additionalProperties": false
+          ]
         },
         "pronunciations": {
           "type": "object",

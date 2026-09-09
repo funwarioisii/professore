@@ -93,7 +93,11 @@ try {
   assert.equal(retry.revision, 1);
   const r = await fetch(`${base}/jobs/${retry.id}/artifacts/project.json`);
   assert.equal((await r.json()).title, "OAuthの認可コードフロー");
-  p.settings.tts.voice = "ProfessoreVoiceDoesNotExist";
+  p.settings.tts = {
+    provider: "macos-say",
+    voice: "ProfessoreVoiceDoesNotExist",
+    rate: 185,
+  };
   await api("/projects", { project: p, expectedRevision: 2 });
   const failed = await wait(
     (await api("/jobs", { projectId: p.id, revision: 3, kind: "audio" })).id,

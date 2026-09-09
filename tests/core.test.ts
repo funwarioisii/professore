@@ -85,6 +85,7 @@ test("cache preserves audio for visuals and invalidates speech/settings/dictiona
   p.settings.pronunciations.OAuth = "読み変更";
   assert.notEqual(audioKey(b, p, "v1"), k);
   const k2 = audioKey(b, p, "v1");
+  assert(p.settings.tts.provider === "macos-say");
   p.settings.tts.rate++;
   assert.notEqual(audioKey(b, p, "v1"), k2);
 });

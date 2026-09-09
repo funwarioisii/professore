@@ -7,6 +7,7 @@ import { hash, run, json, atomic } from "./util.ts";
 import { SAMPLE_RATE } from "./timeline.ts";
 export interface TTSProvider {
   version: string;
+  extension?: string;
   validate?(
     settings: Project["settings"]["tts"],
     signal: AbortSignal,
@@ -21,6 +22,7 @@ export interface TTSProvider {
 export const macosSay: TTSProvider = {
   version: `macos-say-pcm-v1:${os.release()}`,
   async validate(settings, signal) {
+    if (settings.provider !== "macos-say") throw Error("TTS設定が一致しません");
     if (process.platform !== "darwin") throw Error("macOSのsayが必要です");
     const output = await run("/usr/bin/say", ["-v", "?"], signal, 10000);
     const voices = output.split("\n").flatMap((line) => {
@@ -33,6 +35,7 @@ export const macosSay: TTSProvider = {
       );
   },
   async synthesize(text, settings, file, signal) {
+    if (settings.provider !== "macos-say") throw Error("TTS設定が一致しません");
     if (process.platform !== "darwin") throw Error("macOSのsayが必要です");
     const input = file + ".txt";
     await fs.writeFile(input, text);
@@ -57,6 +60,54 @@ export const macosSay: TTSProvider = {
     }
   },
 };
+export const aquestalkPlayer: TTSProvider = {
+  version: `aquestalk-player-wav-v1:${os.release()}`,
+  extension: ".wav",
+  async validate(settings, signal) {
+    signal.throwIfAborted();
+    if (settings.provider !== "aquestalk-player")
+      throw Error("TTS設定が一致しません");
+    if (process.platform !== "darwin")
+      throw Error("Mac版AquesTalkPlayerが必要です");
+    try {
+      await fs.access(aquestalkPath(), fs.constants.X_OK);
+    } catch {
+      throw Error(
+        "AquesTalkPlayerが見つかりません。公式Mac版をApplicationsへインストールするか、PROFESSORE_AQUESTALK_PLAYERに実行ファイルの絶対パスを設定してサービスを再起動してください",
+      );
+    }
+  },
+  async synthesize(text, settings, file, signal) {
+    if (settings.provider !== "aquestalk-player")
+      throw Error("TTS設定が一致しません");
+    const input = file + ".txt";
+    await fs.writeFile(input, text);
+    try {
+      await run(
+        aquestalkPath(),
+        ["-F", input, "-P", settings.preset, "-W", file],
+        signal,
+        90000,
+      );
+      if (!(await fs.stat(file)).size) throw Error("WAVが空です");
+    } catch (e) {
+      throw Error(
+        `AquesTalkPlayerの音声生成に失敗しました。プリセット「${settings.preset}」が存在するか、アプリで読み上げできるか確認してください: ${(e as Error).message}`,
+      );
+    } finally {
+      await fs.rm(input, { force: true });
+    }
+  },
+};
+function aquestalkPath() {
+  return (
+    process.env.PROFESSORE_AQUESTALK_PLAYER ||
+    "/Applications/AquesTalkPlayer.app/Contents/MacOS/AquesTalkPlayer"
+  );
+}
+export function ttsProvider(settings: Project["settings"]["tts"]): TTSProvider {
+  return settings.provider === "aquestalk-player" ? aquestalkPlayer : macosSay;
+}
 export function speechText(b: Beat, p: Project) {
   if (b.speech) return b.speech;
   const dict = p.settings.pronunciations;
@@ -81,7 +132,7 @@ export async function generateAudio(
   p: Project,
   cache: string,
   signal: AbortSignal,
-  provider: TTSProvider = macosSay,
+  provider: TTSProvider = ttsProvider(p.settings.tts),
 ) {
   signal.throwIfAborted();
   await provider.validate?.(p.settings.tts, signal);
@@ -100,14 +151,16 @@ export async function generateAudio(
       return { key, file, samples: m.samples as number, cached: true };
   } catch {}
   const tmp = path.join(cache, randomUUID());
+  const source = tmp + (provider.extension ?? ".aiff");
   try {
     let last: unknown;
     for (let retry = 0; retry < 2; retry++) {
       try {
+        await fs.rm(source, { force: true });
         await provider.synthesize(
           speechText(b, p),
           p.settings.tts,
-          tmp + ".aiff",
+          source,
           signal,
         );
         await run(
@@ -117,7 +170,7 @@ export async function generateAudio(
             "-v",
             "error",
             "-i",
-            tmp + ".aiff",
+            source,
             "-ar",
             String(SAMPLE_RATE),
             "-ac",
@@ -131,7 +184,7 @@ export async function generateAudio(
         const data = await fs.readFile(tmp + ".pcm");
         if (data.length < 960 || !data.some((v) => v !== 0))
           throw Error(
-            "音声が空です。macOSの音声ダウンロード・音声サービス権限を確認してください",
+            "音声が空です。選択したTTSの音声・プリセット・音量を確認してください",
           );
         await fs.rename(tmp + ".pcm", file);
         await atomic(meta, {
@@ -147,7 +200,7 @@ export async function generateAudio(
     }
     throw last;
   } finally {
-    await fs.rm(tmp + ".aiff", { force: true });
+    await fs.rm(source, { force: true });
     await fs.rm(tmp + ".pcm", { force: true });
   }
 }

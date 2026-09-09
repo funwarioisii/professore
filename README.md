@@ -51,6 +51,30 @@ bun run cli download JOB_ID video.mp4 ./oauth.mp4
 
 JSON取り込みは埋め込まれたアセットだけを読み、原稿中のファイルパスやURLを読み取りません。参考資料のURLは出典メタデータです。自動取得しません。
 
+## ゆっくり音声（AquesTalkPlayer）
+
+制作スタジオで原稿を開き、「読み上げ音声」から **ゆっくり（AquesTalkPlayer）** を選べます。macOS標準音声との切り替えはプロジェクト単位です。
+
+1. [公式サイト](https://www.a-quest.com/products/aquestalkplayer.html)からMac版をダウンロードし、`AquesTalkPlayer.app` を `/Applications` にインストールします。ダウンロード時のブラウザ認証は利用者が行ってください。
+2. AquesTalkPlayerを開いて声種を選び、試聴しながら話速などを調整してプリセットを保存します。従来のゆっくり系の声にはAquesTalk1を選びます。「霊夢」というプリセットが最初から存在するとは限りません。
+3. Professoreで「ゆっくり」を選び、保存したプリセット名を入力して原稿を保存し、音声またはMP4を生成します。初期値の「デフォルト」はAquesTalkPlayer側の同名プリセットを使います。
+
+CLI／MCPでは原稿の `settings.tts` を次の値にして、通常どおり取り込み／`save_project` → 音声生成／レンダリングを行います。
+
+```json
+{"provider":"aquestalk-player","preset":"デフォルト","cacheVersion":"1"}
+```
+
+声・話速はAquesTalkPlayerのプリセットで指定するため、こちらでは `voice` / `rate` は指定しません。アプリ側のプリセット・辞書・音声設定やアプリ本体を変更したときは、UIの「プリセット変更を反映」を押すか `cacheVersion` を別の値にして保存してください。外部設定の変更は自動検出しないため、これで古い音声キャッシュを無効化します。原稿の読み上げ文や `settings.pronunciations` の変更は自動でキャッシュに反映されます。
+
+別の場所へインストールした場合は、サービス起動時に実行ファイルの絶対パスを指定します。
+
+```sh
+PROFESSORE_AQUESTALK_PLAYER="$HOME/Applications/AquesTalkPlayer.app/Contents/MacOS/AquesTalkPlayer" mise run start
+```
+
+未インストールや音声生成に失敗した場合はエラーを表示します。別の声への自動切り替えは行いません。AquesTalkPlayer本体はこのリポジトリに同梱しません。個人の非営利利用は無償です。用途を変更する場合は[公式の利用条件](https://www.a-quest.com/products/aquestalkplayer.html)を確認してください。コマンド連携は[公式Mac版マニュアル](https://www.a-quest.com/products/aquestalkplayer_mac_man.html)の `-F` / `-P` / `-W` を使用します。
+
 ## 原稿・差分再生成
 
 正本は [JSON Schema](schema/project.schema.json) と [サンプル](examples/oauth.json)。Markdownはシーン本文や要素の中に書きます。MarkdownのHTML・画像・リンクは除去し、見出し・本文・箇条書き・コードなどを表示します。

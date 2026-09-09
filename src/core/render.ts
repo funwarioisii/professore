@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
 import type { Project } from "./schema.ts";
 import { timeline, type AudioEntry, type Timeline } from "./timeline.ts";
-import { generateAudio, macosSay } from "./tts.ts";
+import { generateAudio, ttsProvider } from "./tts.ts";
 import { atomic, run } from "./util.ts";
 import { validate } from "./validate.ts";
 const dist = fileURLToPath(new URL("../../dist/", import.meta.url));
@@ -93,7 +93,7 @@ export async function pipeline(
   }
   await atomic(path.join(dir, "generated.json"), {
     revision,
-    provider: macosSay.version,
+    provider: ttsProvider(p.settings.tts).version,
     settings: p.settings,
     timeline: timing,
     createdAt: new Date().toISOString(),

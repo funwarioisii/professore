@@ -32,6 +32,8 @@ description: Professoreで日本語の解説MP4を制作・改訂する。構造
 
 `settings.pronunciations: {"OAuth":"オーオース"}` で読みだけを変えられる。個別のbeatでは `speech` が優先される。字幕は `narration` を使う。SVGの対象は `elementId#svgId`、Mermaidは内部DOM IDを参照せず要素全体を対象にする。`show` / `hide` の `fade` は最大0.5秒。
 
+ゆっくり音声を指定された場合は `settings.tts: {"provider":"aquestalk-player","preset":"デフォルト","cacheVersion":"1"}` を使う。AquesTalkPlayerのインストールと同名プリセットが必要。利用者が保存したプリセット名を指定できるが、「霊夢」などの名前が初期状態で存在すると仮定しない。声・速度はアプリ側で設定し、`voice` / `rate` を混ぜない。外部のプリセット・辞書・アプリ本体の変更後は `cacheVersion` を更新して再生成する。導入と切り替えは[README](../../README.md#ゆっくり音声aquestalkplayer)を参照する。音声生成に失敗しても、無断でmacOS標準音声へ置き換えない。
+
 ## ツールで確定・生成する
 
 MCPの基本手順：

@@ -74,13 +74,22 @@ export const Project = z
         theme: z.enum(["midnight", "paper"]),
         font: z.enum(["Hiragino Sans", "Hiragino Kaku Gothic ProN"]),
         subtitles: z.boolean(),
-        tts: z
-          .object({
-            provider: z.literal("macos-say"),
-            voice: z.string().min(1).max(100),
-            rate: z.number().int().min(80).max(400),
-          })
-          .strict(),
+        tts: z.discriminatedUnion("provider", [
+          z
+            .object({
+              provider: z.literal("macos-say"),
+              voice: z.string().min(1).max(100),
+              rate: z.number().int().min(80).max(400),
+            })
+            .strict(),
+          z
+            .object({
+              provider: z.literal("aquestalk-player"),
+              preset: z.string().trim().min(1).max(100),
+              cacheVersion: z.string().min(1).max(100).default("1"),
+            })
+            .strict(),
+        ]),
         pronunciations: z.record(
           z.string().min(1).max(100),
           z.string().max(200),

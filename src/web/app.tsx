@@ -273,6 +273,142 @@ function App() {
                 </button>
               </div>
             </section>
+            <section className="tts-settings" aria-label="読み上げ設定">
+              <label>
+                読み上げ音声
+                <select
+                  aria-label="読み上げ音声"
+                  value={p.settings.tts.provider}
+                  onChange={(e) => {
+                    if (!p) return;
+                    change({
+                      ...p,
+                      settings: {
+                        ...p.settings,
+                        tts:
+                          e.target.value === "aquestalk-player"
+                            ? {
+                                provider: "aquestalk-player",
+                                preset: "デフォルト",
+                                cacheVersion: "1",
+                              }
+                            : {
+                                provider: "macos-say",
+                                voice: "Kyoko",
+                                rate: 185,
+                              },
+                      },
+                    });
+                  }}
+                >
+                  <option value="macos-say">macOS標準音声</option>
+                  <option value="aquestalk-player">
+                    ゆっくり（AquesTalkPlayer）
+                  </option>
+                </select>
+              </label>
+              {p.settings.tts.provider === "aquestalk-player" ? (
+                <>
+                  <label>
+                    プリセット名
+                    <input
+                      aria-label="プリセット名"
+                      key={p.settings.tts.preset}
+                      defaultValue={p.settings.tts.preset}
+                      onBlur={(e) => {
+                        if (
+                          !p ||
+                          p.settings.tts.provider !== "aquestalk-player"
+                        )
+                          return;
+                        change({
+                          ...p,
+                          settings: {
+                            ...p.settings,
+                            tts: {
+                              ...p.settings.tts,
+                              preset:
+                                e.target.value.trim() || p.settings.tts.preset,
+                            },
+                          },
+                        });
+                      }}
+                    />
+                  </label>
+                  <button
+                    onClick={() => {
+                      if (!p || p.settings.tts.provider !== "aquestalk-player")
+                        return;
+                      change({
+                        ...p,
+                        settings: {
+                          ...p.settings,
+                          tts: {
+                            ...p.settings.tts,
+                            cacheVersion: String(Date.now()),
+                          },
+                        },
+                      });
+                      setNotice("次回生成時に音声を作り直します");
+                    }}
+                  >
+                    プリセット変更を反映
+                  </button>
+                  <p className="muted">
+                    AquesTalkPlayerのインストールが必要です。声・速度はアプリ側のプリセットで設定します。設定や辞書を変更したら「プリセット変更を反映」を押してください。
+                  </p>
+                </>
+              ) : (
+                <>
+                  <label>
+                    声
+                    <input
+                      aria-label="声"
+                      key={p.settings.tts.voice}
+                      defaultValue={p.settings.tts.voice}
+                      onBlur={(e) => {
+                        if (!p || p.settings.tts.provider !== "macos-say")
+                          return;
+                        change({
+                          ...p,
+                          settings: {
+                            ...p.settings,
+                            tts: {
+                              ...p.settings.tts,
+                              voice:
+                                e.target.value.trim() || p.settings.tts.voice,
+                            },
+                          },
+                        });
+                      }}
+                    />
+                  </label>
+                  <label>
+                    速度
+                    <input
+                      aria-label="速度"
+                      type="number"
+                      min={80}
+                      max={400}
+                      value={p.settings.tts.rate}
+                      onChange={(e) => {
+                        if (!p || p.settings.tts.provider !== "macos-say")
+                          return;
+                        const rate = Number(e.target.value);
+                        if (Number.isInteger(rate) && rate >= 80 && rate <= 400)
+                          change({
+                            ...p,
+                            settings: {
+                              ...p.settings,
+                              tts: { ...p.settings.tts, rate },
+                            },
+                          });
+                      }}
+                    />
+                  </label>
+                </>
+              )}
+            </section>
             <div className="tabs">
               <button
                 className={tab === "scene" ? "active" : ""}
